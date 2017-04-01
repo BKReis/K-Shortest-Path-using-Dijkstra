@@ -53,29 +53,43 @@ class Grafo:
 		return iter(self.listaDeNodos.values())
 
 	
-def Dijkstra(Grafo,nodoInicial):
+class Dijkstra:
 	dictHeap = {}
 	dictDistanciaDoNodoInicial = {}
+	lastNodeTable = {}
+	minimunPathList = []
 
-	for x in Grafo.listaDeNodos:
-		dictDistanciaDoNodoInicial[x] = 999999
-		dictHeap[x] = dictDistanciaDoNodoInicial[x]
+	def __init__(self,Grafo,nodoInicial,finalNode):
+		for x in Grafo.listaDeNodos:
+			self.dictDistanciaDoNodoInicial[x] = 999999
+			self.dictHeap[x] = self.dictDistanciaDoNodoInicial[x]
+			self.lastNodeTable[x] = nodoInicial
 
-	dictDistanciaDoNodoInicial[nodoInicial] = 0
-	dictHeap[nodoInicial] = 0
+		self.dictDistanciaDoNodoInicial[nodoInicial] = 0
+		self.dictHeap[nodoInicial] = 0
 
-	while dictHeap:
-		k = heapMinimo(dictHeap)
-		for j in Grafo.listaDeNodos[k].getConexoes():
+		while self.dictHeap:
+			source_node_name = heapMinimo(self.dictHeap)
+			for dest_node in Grafo.listaDeNodos[source_node_name].getConexoes():
+				acrescimo = Grafo.listaDeNodos[source_node_name].getPeso(dest_node)
+				novaDistancia = self.dictDistanciaDoNodoInicial[source_node_name] + acrescimo
+				dest_node_name = dest_node.getNome()
+				if (novaDistancia < self.dictDistanciaDoNodoInicial[dest_node_name]):
+					self.dictDistanciaDoNodoInicial[dest_node_name] = novaDistancia
+					self.dictHeap[dest_node_name] = novaDistancia
+					self.lastNodeTable[dest_node_name] = source_node_name
 
-			acrescimo = Grafo.listaDeNodos[k].getPeso(j)
-			novaDistancia = dictDistanciaDoNodoInicial[k] + acrescimo
-			aux = j.getNome()
-			if (novaDistancia < dictDistanciaDoNodoInicial[aux]):
-				dictDistanciaDoNodoInicial[aux] = novaDistancia
-				dictHeap[aux] = novaDistancia
+		#monta lista formando menor caminho a partir do node final percorrendo tabela de anteriores
+		#ate chegar no node inicial
+		self.minimunPathList.append(finalNode)
+		nodeAnterior = self.lastNodeTable[finalNode]
+		while nodoInicial != nodeAnterior:
+			self.minimunPathList.append(nodeAnterior)
+			nodeAnterior = self.lastNodeTable[nodeAnterior]
+		self.minimunPathList.append(nodoInicial)
+		self.minimunPathList = list(reversed(self.minimunPathList))
 
-	return dictDistanciaDoNodoInicial
+
 
 def heapMinimo(dictHeap):
 	#Valor muito alto 
@@ -105,11 +119,16 @@ if __name__ == '__main__':
 	Exemplo.criaAresta(5,2,7)
 	Exemplo.criaAresta(5,3,4)
 
-	dictDistanciaDoNodoInicial = Dijkstra(Exemplo,Exemplo.listaDeNodos[0].getNome())
+	dijkstra = Dijkstra(Exemplo,Exemplo.listaDeNodos[1].getNome(),Exemplo.listaDeNodos[3].getNome())
 
 	for v in Exemplo:
 		for w in v.getConexoes():
 			print("(%s,%s)" % (v.getNome(),w.getNome()))
 
 	print "Shortest distance from each vertex:"
-	for a in dictDistanciaDoNodoInicial: print "%s: %s" % (a, dictDistanciaDoNodoInicial[a])
+	for a in dijkstra.dictDistanciaDoNodoInicial: print "%s: %s" % (a, dijkstra.dictDistanciaDoNodoInicial[a])
+
+	print "Last node table:"
+	for a in dijkstra.lastNodeTable: print "%s: %s" % (a, dijkstra.lastNodeTable[a])
+
+	print "minimum path list" + str(dijkstra.minimunPathList)
