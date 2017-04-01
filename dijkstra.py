@@ -39,4 +39,5 @@ def printPath(exemplo,dictDistanciaDoNodoInicial):
             print("(%s,%s)" % (v.getNome(), w.getNome()))
 
     print "Shortest distance from each vertex:"
-    for a in dictDistanciaDoNodoInicial: print "%s: %s" % (a, exemplo.dictDistanciaDoNodoInicial[a])
+    for a in dictDistanciaDoNodoInicial:
+        print "%s: %s" % (a, dictDistanciaDoNodoInicial[a])
