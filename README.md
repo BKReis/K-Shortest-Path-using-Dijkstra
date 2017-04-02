@@ -1,8 +1,8 @@
 # K-Shortest-Path-using-Dijkstra
 
 
-Victor Zaffalon Marra - 130136760
-Bruno José Bergamaschi Kumer Reis - 666
+Victor Zaffalon Marra - 13/0136760
+Bruno José Bergamaschi Kumer Reis - 14/0017666
 Python version used 2.7.10
 
 How to run the program:
@@ -48,4 +48,4 @@ following is the table of each number corresponding to the locations in the ipe 
 24: Boa Vista
 25: Porto Velho
 26: Rio Branco
-
+27: Teresina

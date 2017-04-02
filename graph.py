@@ -19,6 +19,8 @@ class Grafo:
         initial_node = {}
         final_node = {}
         pesoFinal = 9999999
+
+        #encontra aresta de menor peso entre as arestas relacionadas com elementos do menor caminho
         for x in minimumPathList:
             for y in self.listaDeNodos[x].conectadoCom:
                 peso = self.listaDeNodos[x].conectadoCom[y]
@@ -29,6 +31,8 @@ class Grafo:
                     final_node = y.nome
        #print "menor aresta: "+ str(initial_node) + "," + str(final_node) + "peso:" + str(pesoFinal)
 
+
+        #apaga do grafo caminho de ida e volta da aresta de menor peso
         if final_node != {}:
             for j in self.listaDeNodos[initial_node].conectadoCom:
                 if j.nome == final_node:
@@ -38,7 +42,6 @@ class Grafo:
                 if i.nome == initial_node:
                     self.listaDeNodos[final_node].conectadoCom.pop(i)
                     break
-        #print "teste"
 
 
     def __iter__(self):
