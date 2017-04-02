@@ -23,17 +23,19 @@ if __name__ == '__main__':
 		initial_node_number = int(sys.argv[2])
 		dest_node_number = int(sys.argv[3])
 		u = 0
+		pathToSelf = False
 		while u < k:
 			if dest_node_number in graph.listaDeNodos:
 				dijkstra = Dijkstra(graph, graph.listaDeNodos[initial_node_number].getNome(), graph.listaDeNodos[dest_node_number].getNome())
-				if dijkstra.dictDistanciaDoNodoInicial[dest_node_number] < infinito:
+				if dijkstra.dictDistanciaDoNodoInicial[dest_node_number] < infinito and pathToSelf==False:
 					print "Shortest Path "+str(u+1) +": "+ str(dijkstra.minimunPathList)
 					print "Path Total Weight: "+str(dijkstra.dictDistanciaDoNodoInicial[dest_node_number])
-					graph.listaDeNodos.pop(dijkstra.minimunPathList[1])
-					#graph.deletaMenorAresta(dijkstra.minimunPathList)
+					graph.deletaMenorAresta(dijkstra.minimunPathList)
+					if dijkstra.dictDistanciaDoNodoInicial[dest_node_number] == 0:
+						pathToSelf = True
 				else:
-					u = k
-					print "All Possible Paths Found"
+						u = k
+						print "All Possible Paths Found"
 			u = u+1
 	else:
 		print "Enter the correct number of arguments!!"

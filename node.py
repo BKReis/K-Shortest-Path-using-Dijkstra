@@ -8,7 +8,7 @@ class Nodos:
 		self.conectadoCom[vizinho] = peso
 
 	def removeVizinho(self,a):
-		self.conectadoCom[a].pop()
+		self.conectadoCom.pop(a)
 
 	def setDistanciaDoNodoInicial(self,distancia):
 		self.distanciaDoNodoInicial = distancia

@@ -15,8 +15,38 @@ class Grafo:
         self.listaDeNodos[a].adicionaVizinhos(self.listaDeNodos[b], peso)
         self.listaDeNodos[b].adicionaVizinhos(self.listaDeNodos[a], peso)
 
-    def deletaUltimaAresta(self):
-        self.listaDeNodos[-1].removeVizinho()
+    def deletaMenorAresta(self,minimumPathList):
+        initial_node = {}
+        final_node = {}
+        pesoFinal = 9999999
+        for x in minimumPathList:
+            for y in self.listaDeNodos[x].conectadoCom:
+                peso = self.listaDeNodos[x].conectadoCom[y]
+                #print str(x) +" conecta com: " + str(y.nome) + " com peso: " +str(peso)
+                if(pesoFinal> peso) and (existeNoPathMinimo(minimumPathList,y.nome)):
+                    pesoFinal = peso
+                    initial_node = x
+                    final_node = y.nome
+       #print "menor aresta: "+ str(initial_node) + "," + str(final_node) + "peso:" + str(pesoFinal)
+
+        if final_node != {}:
+            for j in self.listaDeNodos[initial_node].conectadoCom:
+                if j.nome == final_node:
+                    self.listaDeNodos[initial_node].conectadoCom.pop(j)
+                    break
+            for i in self.listaDeNodos[final_node].conectadoCom:
+                if i.nome == initial_node:
+                    self.listaDeNodos[final_node].conectadoCom.pop(i)
+                    break
+        #print "teste"
+
 
     def __iter__(self):
         return iter(self.listaDeNodos.values())
+
+
+def existeNoPathMinimo(minimumPathList, a):
+    if a in minimumPathList:
+        return True
+    else:
+        return False
