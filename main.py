@@ -30,6 +30,7 @@ if __name__ == '__main__':
 					print "Shortest Path "+str(u+1) +": "+ str(dijkstra.minimunPathList)
 					print "Path Total Weight: "+str(dijkstra.dictDistanciaDoNodoInicial[dest_node_number])
 					graph.listaDeNodos.pop(dijkstra.minimunPathList[1])
+					#graph.deletaMenorAresta(dijkstra.minimunPathList)
 				else:
 					u = k
 					print "All Possible Paths Found"
