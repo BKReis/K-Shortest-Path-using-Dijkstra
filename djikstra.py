@@ -5,6 +5,7 @@ class Dijkstra:
 	minimunPathList = []
 
 	def __init__(self,Grafo,nodoInicial,finalNode):
+		self.minimunPathList = []
 		for x in Grafo.listaDeNodos:
 			self.dictDistanciaDoNodoInicial[x] = 999999
 			self.dictHeap[x] = self.dictDistanciaDoNodoInicial[x]
